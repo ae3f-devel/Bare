@@ -17,12 +17,21 @@ jobs:
           gh auth status
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Issues
+        # You may pin to the exact commit or the version.
+        # uses: jayalfredprufrock/create-issues-action@c25c08105a3843aa34df294c0b45594813f06dd1
+        uses: jayalfredprufrock/create-issues-action@v1.2.1
+        with:
+          # Path or glob expression to templates. File names should be unique across directories.
+          # template-path: # optional, default is .github/issues/**/*.md
+          # Indicates whether to follow symbolic links when globbing templates.
+          follow-symbolic-links: true # optional, default is true
+          # The owner of the repo to create issues in if different than the context repo owner. Can be overridden in frontmatter with `repoOwner`
+          repo-owner: ae3f-devel # optional
+          # The the repo name to create issues in if different than the context repo. Can be overridden in frontmatter with `repoName`
+          repo-name: LogicFortress # optional
+          # GitHub token or PAT with permissions to create issues and projects in the specified repos.
+          github-token: ${{ secrets.GITHUB_TOKEN }}  # optional, default is ${{ github.token }}
+          
 
-      - name: Create Issue
-        run: |
-          gh issue create --repo ae3f-devel/LogicFortress \
-            --title "[CI/CD] Automatic build command" \
-            --body "ae3f-devel/Bare has been updated." \
-            --label "bug,enhancement"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
