@@ -33,9 +33,11 @@ jobs:
 
     - name: Remote pull
       run: |
-        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git LogicFortress
+        git clone https://x-access-token:${{ secrets.PAT }}@github.com/ae3f-devel/LogicFortress.git LogicFortress
         cd LogicFortress
         git checkout main  # Ensure we're on the correct branch
+      env:
+        PAT: ${{ secrets.PAT }}
 
     - name: Configure Git
       run: |
@@ -88,3 +90,5 @@ jobs:
       run: |
         cd LogicFortress
         git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git main
+      env:
+        PAT: ${{ secrets.PAT }}
