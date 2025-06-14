@@ -24,8 +24,5 @@ jobs:
             --title "[CI/CD] Automatic build command" \
             --body "ae3f-devel/Bare has been updated." \
             --label "bug,enhancement"
-  env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
