@@ -1,37 +1,48 @@
-name: Create Issue with GitHub CLI
+name: Build & Test
 on:
   push:
     branches: [main]
-
-permissions: write-all
-
+    
 jobs:
-  create-issue:
-    runs-on: ubuntu-latest
+  test-def:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        build_type: [Release, Debug]
+        ae2f_IS_SHARED: [ ON ]
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - uses: jayalfredprufrock/create-issues-action@v1
+    - uses: actions/checkout@v4
+      with:
+        ref: 'main'
+        fetch-depth: '0'
 
-      - name: Debug GH_TOKEN permissions
-        run: |
-          gh auth status
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Create Issues
-        # You may pin to the exact commit or the version.
-        # uses: jayalfredprufrock/create-issues-action@c25c08105a3843aa34df294c0b45594813f06dd1
-        uses: jayalfredprufrock/create-issues-action@v1.2.1
-        with:
-          # Path or glob expression to templates. File names should be unique across directories.
-          # template-path: # optional, default is .github/issues/**/*.md
-          # Indicates whether to follow symbolic links when globbing templates.
-          follow-symbolic-links: true # optional, default is true
-          # The the repo name to create issues in if different than the context repo. Can be overridden in frontmatter with `repoName`
-          repo-name: LogicFortress # optional
-          # GitHub token or PAT with permissions to create issues and projects in the specified repos.
-          github-token: ${{ secrets.GITHUB_TOKEN }}  # optional, default is ${{ github.token }}
-          
+    - name: Set reusable strings
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name: Git clone
+      run: >
+        git clone https://github.com/ae3f-devel/LogicFortress
       
+
+    - name: Configure CMake
+      run: >
+        cmake -B ./LogicFortress/build -S ./LogicFortress
+        -D ae2f_IS_SHARED=${{ matrix.ae2f_IS_SHARED }}
+        -D ae2f_nakedalais=ON
+        -D ae2f_TEST=OFF
+        
+    - name: Build
+      run: |
+        cmake --build ./LogicFortress/build --config ${{ matrix.build_type }}
+
+    - name: Test
+      run: |
+        ctest --test-dir ./LogicFortress/build -C ${{ matrix.build_type }}
+  
