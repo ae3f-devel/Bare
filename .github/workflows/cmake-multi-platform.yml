@@ -81,9 +81,4 @@ jobs:
       run: cd LogicFortress && git commit -m "[CI/CD] Generated plugin build automation"
     
     - name: Push
-      uses: ad-m/github-push-action@master
-      with:
-        branch: main
-        directory: ./LogicFortress
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: ae3f-devel/LogicFortress
+      run: cd LogicFortress && git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git
