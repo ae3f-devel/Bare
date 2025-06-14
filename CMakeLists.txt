@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.30)
+
 include(_.cmake)
 ae2f_CoreLibFetch(ae2f Core main)
 ae2f_CoreLibFetch(ae2f Inet main)
