@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.30)
 
 include(_.cmake)
-ae2f_CoreLibFetch(ae2f Core main)
+ae2f_CoreLibFetch(ae2f Core Rel-v6.24.19)
 ae2f_CoreLibFetch(ae2f Inet main)
 ae2f_CoreLibFetch(ae2f Ruler main)
 
