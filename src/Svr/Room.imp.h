@@ -1,11 +1,16 @@
 #ifndef Room_imp_h
 #define Room_imp_h
 
-#include_next <Room.imp.h>
 
 #include "./Player.imp.h"
 #include "./RoomFlags.h"
 #include "./RoomPrivate.h"
+
+#if ae2f_IS_WIN
+#include <../inc/Room.imp.h>
+#else
+#include_next <Room.imp.h>
+#endif
 
 ae2f_extern ae2f_SHAREDCALL unsigned short PORTMAIN;
 
