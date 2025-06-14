@@ -46,6 +46,7 @@ jobs:
 
     - name: Configure Git
       run: |
+        cd LogicFortress
         git config user.name BOT
         git config user.email a@a.com
 
