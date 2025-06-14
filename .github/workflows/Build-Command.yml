@@ -11,12 +11,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - uses: jayalfredprufrock/create-issues-action@v1
 
       - name: Debug GH_TOKEN permissions
         run: |
           gh auth status
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Create Issues
         # You may pin to the exact commit or the version.
         # uses: jayalfredprufrock/create-issues-action@c25c08105a3843aa34df294c0b45594813f06dd1
@@ -26,8 +28,6 @@ jobs:
           # template-path: # optional, default is .github/issues/**/*.md
           # Indicates whether to follow symbolic links when globbing templates.
           follow-symbolic-links: true # optional, default is true
-          # The owner of the repo to create issues in if different than the context repo owner. Can be overridden in frontmatter with `repoOwner`
-          repo-owner: ae3f-devel # optional
           # The the repo name to create issues in if different than the context repo. Can be overridden in frontmatter with `repoName`
           repo-name: LogicFortress # optional
           # GitHub token or PAT with permissions to create issues and projects in the specified repos.
