@@ -33,7 +33,7 @@ jobs:
 
     - name: Clone destination repository
       run: |
-        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress LogicFortress
+        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git LogicFortress
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -76,12 +76,9 @@ jobs:
         cd LogicFortress
         git commit -m "[CI/CD] Generated plugin build automation"
 
-    - name: Git Push Action
-      # You may pin to the exact commit or the version.
-      # uses: x-actions/git-push@ba04e59cd92b579c1df53fa8d398bec56f310906
-      uses: x-actions/git-push@v1.0
-      with:
+    - name: Push Changes
+      run: |
         cd LogicFortress
-        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
