@@ -11,7 +11,7 @@
 #include <time.h>
 #include "./Room.auto.h"
 
-#include "./WaitWake.h"
+#include <ae2f/Lock.h>
 #include "./Player.h"
 
 #pragma pack(push, 1)

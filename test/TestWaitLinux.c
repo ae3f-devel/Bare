@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
-#include <WaitWake.h>
+#include <ae2f/Lock.h>
 
 #define THREAD_COUNT 2
 ae2f_addrel_t sharedFlag = 0; // Shared variable for synchronization

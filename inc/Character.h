@@ -6,6 +6,6 @@ typedef struct Character {
 } Character;
 
 /** Playable character type. */
-typedef plchar_t;
+typedef int plchar_t;
 
 #endif

@@ -5,7 +5,7 @@
 #include <ae2f/Atom.h>
 #include <ae2f/Call.h>
 #include <ae2f/Cast.h>
-#include <WaitWake.h>
+#include <ae2f/Lock.h>
 
 ae2f_extern
     ae2f_SHAREDEXPORT ae2f_Atom(ae2f_addrel_t) RoomFlags[MAX_ROOM_COUNT + 1];
