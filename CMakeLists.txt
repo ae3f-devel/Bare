@@ -46,6 +46,8 @@ if(WIN32)
     target_link_libraries(libCli PUBLIC ws2_32)
     target_link_libraries(libSvrUDP PUBLIC ws2_32)
     target_link_libraries(libSvrUDP PUBLIC synchronization)
+    target_compile_options(libCli PUBLIC /experimental:c11atomics)
+    target_compile_options(libSvrUDP PUBLIC /experimental:c11atomics)
 endif()
 
 add_executable(testLobby test/main.c)
