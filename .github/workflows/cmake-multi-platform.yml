@@ -52,32 +52,37 @@ jobs:
     - name: Cleanup
       uses: JesseTG/rm@v1.0.3
       with:
-        path: ./Assets/Plugins
+        path: ./LogicFortress/Assets/Plugins
 
-    - name: Commit
-      run: git add ./Assets/Plugins && git commit -m "[CI/CD] Previous binaries removal"
+    - name: Git Add
+      run: cd LogicFortress && git add ./Assets/Plugins
+
+    - name: Git Commit 
+      run: cd LogicFortress && git commit -m "[CI/CD] Previous binaries removal"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake 
-        -B ${{ steps.strings.outputs.build-output-dir }}
-        -S ${{ github.workspace }}
+        -B LogicFortress/build
+        -S LogicFortress
         -G Ninja
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+      run: cmake --build LogicFortress/build --config ${{ matrix.build_type }}
 
     - name: Git Add
-      run: git add ./Assets/
+      run: cd LogicFortress && git add ./Assets/
 
     - name: git Commit
-      run: git commit -m "[CI/CD] Generated plugin build automation"
+      run: cd LogicFortress && git commit -m "[CI/CD] Generated plugin build automation"
     
     - name: Push
       uses: ad-m/github-push-action@master
       with:
         branch: main
+        directory: ./LogicFortress
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: LogicFortress
