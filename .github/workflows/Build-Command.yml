@@ -33,7 +33,7 @@ jobs:
 
     - name: Configure CMake
       run: >
-        cmake -B build -S ./LogicFortress
+        cmake -B ./LogicFortress/build -S ./LogicFortress
         -D ae2f_IS_SHARED=${{ matrix.ae2f_IS_SHARED }}
         -D ae2f_nakedalais=ON
         
