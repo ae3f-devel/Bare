@@ -76,9 +76,20 @@ jobs:
         cd LogicFortress
         git commit -m "[CI/CD] Generated plugin build automation"
 
-    - name: Push Changes
-      run: |
-        cd LogicFortress
-        git push origin main
+    - name: Git Push Action
+      # You may pin to the exact commit or the version.
+      # uses: x-actions/git-push@ba04e59cd92b579c1df53fa8d398bec56f310906
+      uses: x-actions/git-push@v1.0
+      with:
+        # git user email
+        GITHUB_EMAIL: a@a.com # optional, default is xiexianbin
+        # git use username
+        GITHUB_USERNAME: BOT # optional, default is me@xiexianbin.cn
+        # https:/<token>@github.com/owner/repo.git
+        PUBLISH_REPO: ae3f-devel/LogicFortress # optional
+        # git branch
+        PUBLISH_BRANCH: main # optional
+        # dir to publish
+        PUBLISH_DIR: LogicFortress # optional
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
