@@ -26,22 +26,22 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Configure Git
-      run: |
-        git config user.name "BOT"
-        git config user.email "a@a.com"
+    - name: Git clone
+      run: >
+        git clone https://github.com/ae3f-devel/LogicFortress
+      
 
     - name: Configure CMake
       run: >
-        cmake -B build -S .
+        cmake -B build -S ./LogicFortress
         -D ae2f_IS_SHARED=${{ matrix.ae2f_IS_SHARED }}
         -D ae2f_nakedalais=ON
         
     - name: Build
       run: |
-        cmake --build ./build --config ${{ matrix.build_type }}
+        cmake --build ./LogicFortress/build --config ${{ matrix.build_type }}
 
     - name: Test
       run: |
-        ctest --test-dir build -C ${{ matrix.build_type }}
+        ctest --test-dir ./LogicFortress/build -C ${{ matrix.build_type }}
   
