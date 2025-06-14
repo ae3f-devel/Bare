@@ -33,7 +33,7 @@ jobs:
 
     - name: Clone destination repository
       run: |
-        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<org>/<destination-repo>.git
+        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress LogicFortress
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
