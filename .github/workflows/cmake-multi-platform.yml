@@ -42,7 +42,7 @@ jobs:
 
     - name: Remote pull
       run: >
-        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com:ae3f-devel/LogicFortress.git LogicFortress && cd LogicFortress
+        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git LogicFortress && cd LogicFortress
 
     - name: Configure Git
       run: |
