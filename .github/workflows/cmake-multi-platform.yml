@@ -31,13 +31,11 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Remote pull
+    - name: Clone destination repository
       run: |
-        git clone https://x-access-token:${{ secrets.PAT }}@github.com/ae3f-devel/LogicFortress.git LogicFortress
-        cd LogicFortress
-        git checkout main  # Ensure we're on the correct branch
+        git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<org>/<destination-repo>.git
       env:
-        PAT: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Configure Git
       run: |
@@ -53,16 +51,12 @@ jobs:
     - name: Git Add Cleanup
       run: |
         cd LogicFortress
-        git add ./Assets/Plugins || echo "No files to add"
+        git add ./Assets/Plugins
 
     - name: Git Commit Cleanup
       run: |
         cd LogicFortress
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "[CI/CD] Previous binaries removal"
-        fi
+        git commit -m "[CI/CD] Previous binaries removal"
 
     - name: Configure CMake
       run: |
@@ -75,20 +69,16 @@ jobs:
     - name: Git Add Build Output
       run: |
         cd LogicFortress
-        git add ./Assets/ || echo "No files to add"
+        git add ./Assets/
 
     - name: Git Commit Build
       run: |
         cd LogicFortress
-        if git diff --staged --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "[CI/CD] Generated plugin build automation"
-        fi
+        git commit -m "[CI/CD] Generated plugin build automation"
 
     - name: Push Changes
       run: |
         cd LogicFortress
         git push origin main
       env:
-        PAT: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
