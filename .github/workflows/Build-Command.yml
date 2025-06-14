@@ -35,6 +35,7 @@ jobs:
       run: >
         cmake -B build -S .
         -D ae2f_IS_SHARED=${{ matrix.ae2f_IS_SHARED }}
+        -D ae2f_nakedalais=ON
         
     - name: Build
       run: |
