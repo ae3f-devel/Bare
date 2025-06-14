@@ -78,7 +78,7 @@ jobs:
 
     - name: Push Changes
       run: |
-        cd LogicFortress
+        cd LogicFortress &&
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
