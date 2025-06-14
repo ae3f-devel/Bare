@@ -42,9 +42,6 @@ jobs:
         cd LogicFortress
         git config user.name "BOT"
         git config user.email "a@a.com"
-        # Configure credential helper to use GITHUB_TOKEN
-        git config --global credential.helper cache
-        echo "https://${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com" | git credential approve
 
     - name: Cleanup
       uses: JesseTG/rm@v1.0.3
