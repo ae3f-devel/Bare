@@ -3,7 +3,12 @@
 #include "./Sock.imp.h"
 #include <Dbg.h>
 
+#if ae2f_IS_WIN
+#include <../inc/Player.imp.h>
+#else 
 #include_next <Player.imp.h>
+#endif
+
 #include <ae2f/Cast.h>
 #include <string.h>
 #define __IsPlayerNull(p) (!Players[(p)].m_connected)
