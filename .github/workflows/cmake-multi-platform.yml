@@ -86,4 +86,4 @@ jobs:
         branch: main
         directory: ./LogicFortress
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: LogicFortress
+        repository: ae3f-devel/LogicFortress
