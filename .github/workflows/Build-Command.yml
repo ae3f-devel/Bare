@@ -12,11 +12,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug GH_TOKEN permissions
+        run: |
+          gh auth status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Issue
         run: |
           gh issue create --repo ae3f-devel/LogicFortress \
             --title "[CI/CD] Automatic build command" \
             --body "ae3f-devel/Bare has been updated." \
             --label "bug,enhancement"
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
