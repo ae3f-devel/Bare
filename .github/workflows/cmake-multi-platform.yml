@@ -55,7 +55,7 @@ jobs:
         path: ./Assets/Plugins
 
     - name: Commit
-      run: git commit -m "[CI/CD] Previous binaries removal"
+      run: git add ./Assets/Plugins && git commit -m "[CI/CD] Previous binaries removal"
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
