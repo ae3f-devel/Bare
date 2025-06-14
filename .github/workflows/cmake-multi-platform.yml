@@ -89,6 +89,6 @@ jobs:
     - name: Push Changes
       run: |
         cd LogicFortress
-        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/ae3f-devel/LogicFortress.git main
+        git push origin main
       env:
         PAT: ${{ secrets.PAT }}
