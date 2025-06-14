@@ -37,6 +37,7 @@ jobs:
         -D ae2f_IS_SHARED=${{ matrix.ae2f_IS_SHARED }}
         -D ae2f_nakedalais=ON
         -D ae2f_TEST=OFF
+        -D CMAKE_C_STANDARD=11
         
     - name: Build
       run: |
