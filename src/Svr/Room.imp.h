@@ -196,7 +196,7 @@ ae2f_MAC() _RoomLobby(const room_t room, globplayer_t *const retgplidx,
 #define __RoomLobby _RoomLobby
 
 #include "./SvrMain.h"
-#include <ae2f/Block.h>
+#include <ae2f/Inet/Block.h>
 
 ae2f_MAC() _RoomTerminate(room_t room) {
   __RoomInit(room);

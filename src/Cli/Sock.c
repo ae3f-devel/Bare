@@ -1,5 +1,5 @@
 #include <Sock.h>
-#include <ae2f/Block.h>
+#include <ae2f/Inet/Block.h>
 #include <ae2f/Call.h>
 
 ae2f_SHAREDEXPORT sock_t SockOpen() {
