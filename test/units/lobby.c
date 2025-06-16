@@ -1,5 +1,5 @@
 #include <Dbg.h>
-#include <Room.imp.h>
+#include <Room.imp.auto.h>
 #include <Sock.h>
 #include <Sock.imp.h>
 #include <stdio.h>
@@ -10,7 +10,10 @@ int main() {
   ae2f_InetMkData data;
   ae2f_InetMk(MAKEWORD(2, 2), &data);
 
-  sock_t sock = socket(AF_INET, SOCK_DGRAM, 0);
+  sock_t sock = SockOpen();
+  int a;
+  dbg_printf("%d\n", a);
+
   uSockAddr in[1];
   __uSockAddrMk(in, "127.0.0.1", TEST_PORT);
   room_t r;

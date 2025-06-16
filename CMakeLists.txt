@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.30)
 
 include(_.cmake)
-ae2f_CoreLibFetch(ae2f Core Rel-v6.24.19)
+ae2f_CoreLibFetch(ae2f Core main)
+ae2f_CoreLibFetch(ae2f Macro main)
 ae2f_CoreLibFetch(ae2f Inet main)
 ae2f_CoreLibFetch(ae2f Ruler main)
 
@@ -23,6 +24,7 @@ file(GLOB libCli-src ${PROJECT_SOURCE_DIR}/src/Cli/*)
 add_library(incCore INTERFACE ${incCore-src})
 target_include_directories(incCore  INTERFACE ${PROJECT_SOURCE_DIR}/inc)
 target_link_libraries(incCore       INTERFACE Inet)
+target_link_libraries(incCore       INTERFACE Macro)
 
 add_library(incSvr  INTERFACE ${incSvr-src})
 add_library(incCli  INTERFACE ${incCli-src})
@@ -59,3 +61,6 @@ endif()
 
 ae2f_CoreTestTent(libCli ${PROJECT_SOURCE_DIR}/test/units)
 
+
+ae2f_Macro_init(1 100 100)
+ae2f_Macro_one(${PROJECT_SOURCE_DIR}/inc/Room.imp.h ${PROJECT_SOURCE_DIR}/inc/Room.imp.auto.h)

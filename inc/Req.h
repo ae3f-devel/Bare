@@ -5,7 +5,7 @@
 
 typedef uint8_t req_t;
 
-#define REQ_ROOMLOBBY               0
-#define REQ_ROOMSHOW                1
+#define REQ_ROOMLOBBY 0
+#define REQ_ROOMSHOW 1
 
 #endif

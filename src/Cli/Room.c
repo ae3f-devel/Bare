@@ -32,25 +32,51 @@ ae2f_SHAREDEXPORT void ReqRoomShow(sock_t svrsock, const uSockAddr *svraddr,
     v_showbuf.count = roomcount;
     v_showbuf.pad = roompad;
 
-    if (sendto(svrsock, (void *)&v_showbuf, sizeof(v_showbuf), 0,
-               &svraddr->m_addr, SockAddrLen) != sizeof(__ReqRoomShowBuf)) {
+    ssize_t v_suc;
+    {
+      time_t t = time(0);
+      while ((v_suc = sendto(svrsock, (void *)&v_showbuf, sizeof(v_showbuf), 0,
+                             &svraddr->m_addr, SockAddrLen)) !=
+             sizeof(__ReqRoomShowBuf)) {
+        if ((errno == EWOULDBLOCK || errno == EAGAIN) && !TIMEOUT(t)) {
+          continue;
+        } else {
+          break;
+        }
+      }
+    }
+
+    if (v_suc != sizeof(__ReqRoomShowBuf)) {
       dbg_puts("Sendto has failed.");
       *(retcount) = 0;
     } else {
       socklen_t v_addrlen = SockAddrLen;
-      *(retcount) = recvfrom(svrsock, (void *)retroom, sizeof(Room) * roomcount,
-                             0, &v_svraddr.m_addr, &v_addrlen);
+
+      {
+        time_t t = time(0);
+
+        while ((v_suc =
+                    recvfrom(svrsock, (void *)retroom, sizeof(Room) * roomcount,
+                             0, &v_svraddr.m_addr, &v_addrlen)) < 0) {
+
+          if ((errno == EWOULDBLOCK || errno == EAGAIN) && !TIMEOUT(t)) {
+            continue;
+          } else {
+            break;
+          }
+        }
+      }
 
 #if 1
       if (!uSockAddrInCheck(&v_svraddr, svraddr)) {
         dbg_puts("Target address did not match.");
         *(retcount) = 0;
-      } else if (*(retcount) > MAX_GLOBAL_PLAYER_COUNT * sizeof(Room)) {
+      } else if (v_suc > MAX_GLOBAL_PLAYER_COUNT * sizeof(Room) || v_suc < 0) {
         dbg_puts("Overflow for some reason.");
         *(retcount) = 0;
       }
       if (*(retcount) > 0) {
-        *(retcount) /= sizeof(Room);
+        *(retcount) = v_suc / sizeof(Room);
       }
 #endif
     }

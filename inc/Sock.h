@@ -29,4 +29,6 @@ typedef union uSockAddr {
 
 #define SockAddrLen (sizeof(sockaddr_internal_t))
 
+ae2f_extern ae2f_SHAREDCALL sock_t SockOpen();
+
 #endif

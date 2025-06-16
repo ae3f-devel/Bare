@@ -1,7 +1,7 @@
 #ifndef PlConn_h
 #define PlConn_h
 
-#include <Player.imp.h>
+#include <Player.h>
 #include <ae2f/Atom.h>
 
 typedef struct PlConn {
