@@ -61,7 +61,7 @@ ae2f_MAC() _ReqRoomLobby(const sock_t svrsock, const uSockAddr *const svraddr,
 
     {
       time_t t = time(0);
-      while ((v_bytes = sendto((svrsock), (const void *)&v_req, sizeof(v_req),
+      while ((v_bytes = sendto((svrsock), (const char *)&v_req, sizeof(v_req),
                                0, &(svraddr)->m_addr, SockAddrLen)) < 0) {
         if ((errno == EWOULDBLOCK || errno == EAGAIN) && !TIMEOUT(t)) {
           continue;
@@ -82,7 +82,7 @@ ae2f_MAC() _ReqRoomLobby(const sock_t svrsock, const uSockAddr *const svraddr,
       {
         time_t t = time(0);
         while (
-            (v_bytes = recvfrom((svrsock), (void *)(retgplidx), sizeof(room_t),
+            (v_bytes = recvfrom((svrsock), (char *)(retgplidx), sizeof(room_t),
                                 0, &v_from->m_addr, v_fromlen)) < 0) {
           if ((errno == EWOULDBLOCK || errno == EAGAIN) && !TIMEOUT(t)) {
             continue;
