@@ -18,6 +18,7 @@ file(GLOB incCore-src ${PROJECT_SOURCE_DIR}/inc/*)
 file(GLOB incSvr-src ${PROJECT_SOURCE_DIR}/inc/Svr/*)
 file(GLOB incCli-src ${PROJECT_SOURCE_DIR}/inc/Cli/*)
 
+file(GLOB libCore-src ${PROJECT_SOURCE_DIR}/src/Core/*)
 file(GLOB libSvrUDP-src ${PROJECT_SOURCE_DIR}/src/Svr/*)
 file(GLOB libCli-src ${PROJECT_SOURCE_DIR}/src/Cli/*)
 
@@ -35,13 +36,15 @@ target_link_libraries(incCli INTERFACE incCore)
 add_library(libSvrUDP ${ae2f_LIBPREFIX} ${libSvrUDP-src})
 add_library(libHost   ${ae2f_LIBPREFIX} ${libCli-src})
 add_library(libCli    ${ae2f_LIBPREFIX} ${libCli-src})
+add_library(libCore    ${ae2f_LIBPREFIX} ${libCore-src})
 
 target_compile_definitions(libSvrUDP PRIVATE SERVER=1)
 target_compile_definitions(libHost PRIVATE SERVER=1)
 target_compile_definitions(libCli PRIVATE SERVER=0)
 
-target_link_libraries(libCli PUBLIC incCli)
-target_link_libraries(libSvrUDP PUBLIC incSvr)
+target_link_libraries(libCore PUBLIC incCore)
+target_link_libraries(libCli PUBLIC incCli PUBLIC libCore)
+target_link_libraries(libSvrUDP PUBLIC incSvr PUBLIC libCore)
 target_link_libraries(libHost PUBLIC incCli PUBLIC libSvrUDP)
 
 if(WIN32)

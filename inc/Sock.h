@@ -17,15 +17,14 @@ typedef union uSockAddr {
   sockaddr_internal_t m_in;
 } uSockAddr;
 
-#define uSockAddrInCheck(a, b)                                                 \
-  (/* (a)->m_in.sin_family == (b)->m_in.sin_family && */                       \
-   (a)->m_in.sin_addr.s_addr == (b)->m_in.sin_addr.s_addr &&                   \
-   (a)->m_in.sin_port == (b)->m_in.sin_port)
-
 #define uSockAddrInCheckNPort(a, b)                                            \
-  (/* (a)->m_in.sin_family == (b)->m_in.sin_family && */                       \
-   (a)->m_in.sin_addr.s_addr ==                                                \
-   (b)->m_in.sin_addr.s_addr /* (a)->m_in.sin_port == (b)->m_in.sin_port */)
+  ((a)->m_in.sin_addr.s_addr == (b)->m_in.sin_addr.s_addr)
+
+#define uSockAddrInCheck(a, b)                                                 \
+  (uSockAddrInCheckNPort(a, b) &&                   \
+   ((a)->m_in.sin_port == (b)->m_in.sin_port))
+
+
 
 #define SockAddrLen (sizeof(sockaddr_internal_t))
 

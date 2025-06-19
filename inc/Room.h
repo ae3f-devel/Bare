@@ -22,7 +22,7 @@
  */
 typedef struct Room {
   char m_Name[MAX_ROOM_NAME_COUNT];
-  int m_started;
+  unsigned m_started : 8;
   player_t m_member;
 } Room;
 

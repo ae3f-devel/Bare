@@ -1,6 +1,6 @@
 #include <Sock.h>
-#include <ae2f/Inet/Block.h>
 #include <ae2f/Call.h>
+#include <ae2f/Inet/Block.h>
 
 ae2f_SHAREDEXPORT sock_t SockOpen() {
   sock_t s = socket(AF_INET, SOCK_DGRAM, 0);
@@ -16,13 +16,16 @@ ae2f_SHAREDEXPORT sock_t SockOpen() {
 }
 
 #include <Timeout.h>
+#undef timeout
 
-ae2f_SHAREDEXPORT time_t timeout = 1;
+ae2f_SHAREDEXPORT uint32_t SetTimeOut(uint32_t t) {
+  static time_t timeout;
+  if(timeout <= 0) timeout = 1; /* Default value */
 
-ae2f_SHAREDEXPORT time_t SetTimeOut(time_t t) {
-  if (t <= 0)
-    return t;
-  return (timeout = t);
+  if (t > 0)
+    timeout = t;
+
+  return (t);
 }
 
 ae2f_SHAREDEXPORT void SockClose(sock_t a) { close(a); }
