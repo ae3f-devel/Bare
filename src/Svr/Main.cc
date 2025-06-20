@@ -29,7 +29,7 @@ static union _SvrUnitIDHandle SvrTds[MAX_ROOM_COUNT + 1] = {};
 ae2f_extern ae2f_SHAREDCALL void SvrUnit(room_t);
 ae2f_extern ae2f_SHAREDCALL void SvrRes(room_t);
 
-static unsigned SvrStarted = 0;
+static unsigned SvrStarted = 0; /** this might have been fucked */
 
 ae2f_extern ae2f_SHAREDCALL void SvrExit();
 ae2f_extern ae2f_SHAREDEXPORT unsigned short PORTMAIN = 0;
@@ -50,6 +50,7 @@ ae2f_extern ae2f_SHAREDEXPORT int SvrMain(unsigned short port) {
   {
     ae2f_InetMkData mkdata;
     if (ae2f_InetMk(MAKEWORD(2, 2), &mkdata) != 0) {
+      SvrStarted = 0;
       return 1;
     }
   }
@@ -60,6 +61,7 @@ ae2f_extern ae2f_SHAREDEXPORT int SvrMain(unsigned short port) {
   if ((svrfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
     dbg_puts("socket has failed");
     close(svrfd);
+    SvrStarted = 0;
     return 1;
   }
 
@@ -69,6 +71,7 @@ ae2f_extern ae2f_SHAREDEXPORT int SvrMain(unsigned short port) {
   if ((a = bind(svrfd, &svraddr.m_addr, SockAddrLen))) {
     dbg_puts("bind has failed");
     close(svrfd);
+    SvrStarted = 0;
     return (a);
   }
 
@@ -91,6 +94,12 @@ ae2f_extern ae2f_SHAREDEXPORT int SvrMain(unsigned short port) {
 #include "./SvrMain.h"
 
 ae2f_extern ae2f_SHAREDEXPORT void SvrExit() {
+
+  if (!SvrStarted) {
+    dbg_puts("Svr has not been started.");
+    return;
+  }
+
   close(SvrUnits[MAX_ROOM_COUNT].ID.fd);
 
   size_t i = MAX_ROOM_COUNT;
